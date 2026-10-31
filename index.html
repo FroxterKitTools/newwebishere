@@ -80,14 +80,14 @@
     .header-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .logo-container img {
-      height: 48px;
+      height: 40px;
       width: auto;
       display: block;
       transition: var(--transition-smooth);
@@ -97,22 +97,28 @@
       transform: scale(1.02);
     }
 
-    nav ul {
+    nav.desktop-nav ul {
       display: flex;
       list-style: none;
       gap: 1.5rem;
     }
 
-    nav a {
+    nav.desktop-nav a {
       font-weight: 500;
       padding: 0.5rem 0.25rem;
       border-bottom: 2px solid transparent;
       transition: var(--transition-smooth);
     }
 
-    nav a:hover, nav a.active {
+    nav.desktop-nav a:hover, nav.desktop-nav a.active {
       border-bottom-color: var(--primary-red);
       color: #ffffff;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .cart-trigger {
@@ -127,11 +133,145 @@
       font-weight: 600;
       transition: var(--transition-smooth);
       border: none;
+      font-family: inherit;
     }
 
     .cart-trigger:hover {
       background-color: var(--dark-red);
       transform: translateY(-2px);
+    }
+
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background-color: var(--bg-card);
+      border-left: 1px solid var(--border-color);
+      z-index: 300;
+      transition: right 0.3s ease;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .close-drawer {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-nav-links a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: block;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Cart Slide-out Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background-color: var(--bg-card);
+      border-left: 1px solid var(--border-color);
+      z-index: 350;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.5);
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-elevated);
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qty-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-drawer-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
     }
 
     /* Main Content Layout */
@@ -144,7 +284,6 @@
       animation: fadeIn 0.3s ease-out;
     }
 
-    /* Section Views */
     .page-view {
       display: none;
     }
@@ -158,20 +297,19 @@
     .hero-banner {
       background-color: var(--bg-card);
       border-radius: 8px;
-      padding: 2.5rem 2rem;
+      padding: 2rem;
       margin-bottom: 2rem;
       border: 1px solid var(--border-color);
     }
 
     .hero-banner h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 0.5rem;
       color: #ffffff;
     }
 
     .hero-banner p {
       color: var(--text-muted);
-      max-width: 700px;
     }
 
     /* Category Navigation */
@@ -207,11 +345,23 @@
       color: #ffffff;
     }
 
-    /* Menu Grid */
+    /* Menu Grid - Optimized for Mobile & Desktop */
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     .dish-card {
@@ -315,6 +465,8 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
     }
 
     .dash-tab-btn {
@@ -326,11 +478,17 @@
       cursor: pointer;
       font-family: inherit;
       transition: var(--transition-smooth);
+      white-space: nowrap;
     }
 
     .dash-tab-btn.active {
       background-color: var(--primary-red);
       border-color: var(--primary-red);
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
     }
 
     .data-table {
@@ -340,6 +498,7 @@
       border-radius: 8px;
       overflow: hidden;
       border: 1px solid var(--border-color);
+      min-width: 600px;
     }
 
     .data-table th, .data-table td {
@@ -366,14 +525,20 @@
       transition: var(--transition-smooth);
     }
 
-    /* Forms & Policy Container */
+    /* Forms & Content Box */
     .content-box {
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 2rem;
+      padding: 1.5rem;
       max-width: 800px;
       margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .content-box {
+        padding: 2rem;
+      }
     }
 
     .content-box h2 {
@@ -417,11 +582,33 @@
       font-family: inherit;
       font-weight: 600;
       transition: var(--transition-smooth);
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .btn-submit {
+        width: auto;
+      }
     }
 
     .btn-submit:hover {
       background-color: var(--dark-red);
       transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-secondary:hover {
+      background-color: #333;
     }
 
     /* Footer */
@@ -436,7 +623,7 @@
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
     }
 
@@ -473,13 +660,20 @@
       background-color: var(--bg-card);
       border-top: 1px solid var(--border-color);
       padding: 1.25rem;
-      z-index: 200;
+      z-index: 400;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
       animation: fadeInUp 0.4s ease-out;
+    }
+
+    @media (min-width: 768px) {
+      .cookie-banner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
 
     .cookie-actions {
@@ -487,31 +681,12 @@
       gap: 0.75rem;
     }
 
-    .btn-secondary {
-      background-color: var(--bg-elevated);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: var(--transition-smooth);
-    }
-
-    .btn-secondary:hover {
-      background-color: #333;
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .header-container {
-        flex-direction: column;
-        gap: 1rem;
+      .desktop-nav {
+        display: none;
       }
-
-      .cookie-banner {
-        flex-direction: column;
-        align-items: flex-start;
+      .mobile-menu-btn {
+        display: block;
       }
     }
   </style>
@@ -522,20 +697,59 @@
   <header>
     <div class="header-container">
       <a href="#" onclick="switchView('home')" class="logo-container">
-        <img src="assets/logo.png" alt="Shezan Restaurant Fortress Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'48\'><rect width=\'100%\' height=\'100%\' fill=\'%231e1e1e\'/><text x=\'50%\' y=\'50%\' fill=\'%23f5f5f5\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'16\'>Shezan Restaurant</text></svg>'">
+        <img src="assets/logo.jpg" alt="Shezan Restaurant Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'40\'><rect width=\'100%\' height=\'100%\' fill=\'%231e1e1e\'/><text x=\'50%\' y=\'50%\' fill=\'%23f5f5f5\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'14\'>Shezan</text></svg>'">
       </a>
-      <nav>
+      
+      <nav class="desktop-nav">
         <ul>
           <li><a href="#" onclick="switchView('home')" id="nav-home" class="active">Menu</a></li>
           <li><a href="#" onclick="switchView('reserve')" id="nav-reserve">Reservations</a></li>
           <li><a href="#" onclick="switchView('contact')" id="nav-contact">Contact</a></li>
         </ul>
       </nav>
-      <button class="cart-trigger" onclick="switchView('cart')">
-        Cart (<span id="cart-count">0</span>)
-      </button>
+
+      <div class="header-actions">
+        <button class="cart-trigger" onclick="toggleCartDrawer()">
+          Cart (<span id="cart-count">0</span>)
+        </button>
+        <button class="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Open Menu">☰</button>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div class="drawer-header">
+      <span style="font-weight: 600; font-size: 1.1rem;">Menu</span>
+      <button class="close-drawer" onclick="toggleMobileDrawer()">✕</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#" onclick="switchView('home'); toggleMobileDrawer();">Menu</a></li>
+      <li><a href="#" onclick="switchView('reserve'); toggleMobileDrawer();">Reservations</a></li>
+      <li><a href="#" onclick="switchView('contact'); toggleMobileDrawer();">Contact</a></li>
+      <li><a href="#" onclick="switchView('dashboard'); toggleMobileDrawer();">Restaurant Dashboard</a></li>
+      <li><a href="#" onclick="switchView('privacy'); toggleMobileDrawer();">Privacy Policy</a></li>
+      <li><a href="#" onclick="switchView('terms'); toggleMobileDrawer();">Terms & Conditions</a></li>
+    </ul>
+  </div>
+
+  <!-- Cart Slide-out Drawer -->
+  <div id="cart-drawer" class="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3 style="color: #fff;">Your Order Cart</h3>
+      <button class="close-drawer" onclick="toggleCartDrawer()">✕</button>
+    </div>
+    <div class="cart-items-list" id="cart-items-container">
+      <p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your cart is empty.</p>
+    </div>
+    <div class="cart-drawer-footer">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">
+        <span>Total:</span>
+        <span id="cart-total-price">PKR 0</span>
+      </div>
+      <button class="btn-submit" style="width: 100%;" onclick="proceedToCheckout()">Proceed to Checkout</button>
+    </div>
+  </div>
 
   <!-- Main View Container -->
   <main>
@@ -557,6 +771,31 @@
 
       <div class="menu-grid" id="menu-container">
         <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Checkout View -->
+    <section id="view-checkout" class="page-view">
+      <div class="content-box">
+        <h2>Complete Your Order</h2>
+        <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+          <div class="form-group">
+            <label for="chk-name">Full Name</label>
+            <input type="text" id="chk-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="chk-phone">Phone Number</label>
+            <input type="tel" id="chk-phone" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="chk-address">Delivery Address (Fortress / Lahore)</label>
+            <textarea id="chk-address" rows="3" class="form-control" required></textarea>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="chk-consent" required> I agree to the terms and ordering policies.</label>
+          </div>
+          <button type="submit" class="btn-submit">Place Order</button>
+        </form>
       </div>
     </section>
 
@@ -586,7 +825,7 @@
       </div>
     </section>
 
-    <!-- Contact / Order Form View -->
+    <!-- Contact View -->
     <section id="view-contact" class="page-view">
       <div class="content-box">
         <h2>Contact Us</h2>
@@ -624,54 +863,60 @@
       </div>
 
       <div id="dash-tab-orders" class="dash-content">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Items</th>
-              <th>Total</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="dash-orders-body">
-            <!-- Dynamic order rows -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dash-orders-body">
+              <!-- Dynamic order rows -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="dash-tab-reservations" class="dash-content" style="display: none;">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Booking ID</th>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Guests</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="dash-res-body">
-            <!-- Dynamic reservation rows -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dash-res-body">
+              <!-- Dynamic reservation rows -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="dash-tab-listings" class="dash-content" style="display: none;">
         <p style="margin-bottom: 1rem; color: var(--text-muted);">Manage menu availability and remove listings directly.</p>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Dish Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="dash-listings-body">
-            <!-- Dynamic dish listing rows -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Dish Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="dash-listings-body">
+              <!-- Dynamic dish listing rows -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -687,20 +932,6 @@
       <div class="content-box">
         <h2>Terms and Conditions</h2>
         <p>By placing an order or making a reservation at Shezan Restaurant Fortress, you agree to comply with our service parameters and policies.</p>
-      </div>
-    </section>
-
-    <section id="view-data-deletion" class="page-view">
-      <div class="content-box">
-        <h2>Data Deletion Request</h2>
-        <p>To request deletion of your contact records or transaction history, submit your account details below.</p>
-        <form onsubmit="alert('Data deletion request recorded.'); return false;" style="margin-top: 1rem;">
-          <div class="form-group">
-            <label for="del-email">Account / Contact Email</label>
-            <input type="email" id="del-email" class="form-control" required>
-          </div>
-          <button type="submit" class="btn-submit">Submit Deletion Request</button>
-        </form>
       </div>
     </section>
 
@@ -726,7 +957,6 @@
         <ul>
           <li><a href="#" onclick="switchView('privacy')">Privacy Policy</a></li>
           <li><a href="#" onclick="switchView('terms')">Terms & Conditions</a></li>
-          <li><a href="#" onclick="switchView('data-deletion')">Data Deletion</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -738,7 +968,7 @@
     </div>
   </footer>
 
-  <!-- Consent Banner -->
+  <!-- Cookie Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display: none;">
     <div>
       <p style="font-size: 0.9rem;">We use non-tracking essential cookies to keep track of your order cart and reservation preferences.</p>
@@ -750,7 +980,6 @@
   </div>
 
   <script>
-    // Local assets data model
     const menuData = [
       { id: 1, name: "Chicken Handi", category: "karahi", price: 1850, image: "assets/dishes/chicken-handi.jpg", desc: "Boneless chicken cooked in a rich cream and tomato curry base." },
       { id: 2, name: "Mutton Karahi", category: "karahi", price: 2950, image: "assets/dishes/mutton-karahi.jpg", desc: "Tender mutton cooked in traditional wok with fresh tomatoes and ginger." },
@@ -762,33 +991,39 @@
 
     let cart = [];
     let mockOrders = [
-      { id: "ORD-101", customer: "Ali Ahmed", items: "Chicken Handi, Rice", total: "Rs. 2,700", status: "Preparing" }
+      { id: "ORD-101", customer: "Ali Ahmed", items: "Chicken Handi (1)", total: "PKR 1,850", status: "Preparing" }
     ];
     let mockReservations = [
       { id: "RES-301", name: "Usman Khan", date: "2026-11-02", guests: 4, status: "Confirmed" }
     ];
 
-    // Initialize application
     document.addEventListener("DOMContentLoaded", () => {
       renderMenu(menuData);
       renderDashboard();
       checkCookieConsent();
     });
 
-    // View Switching
     function switchView(viewId) {
       document.querySelectorAll(".page-view").forEach(el => el.classList.remove("active"));
       const targetView = document.getElementById(`view-${viewId}`);
       if (targetView) targetView.classList.add("active");
       
-      document.querySelectorAll("nav a").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".desktop-nav a").forEach(el => el.classList.remove("active"));
       const navEl = document.getElementById(`nav-${viewId}`);
       if (navEl) navEl.classList.add("active");
       
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // Render Menu Cards
+    function toggleMobileDrawer() {
+      document.getElementById("mobile-drawer").classList.toggle("open");
+    }
+
+    function toggleCartDrawer() {
+      document.getElementById("cart-drawer").classList.toggle("open");
+      renderCart();
+    }
+
     function renderMenu(items) {
       const container = document.getElementById("menu-container");
       container.innerHTML = items.map(item => `
@@ -808,7 +1043,6 @@
       `).join('');
     }
 
-    // Filter Menu Category
     function filterMenu(category, btn) {
       document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
@@ -819,16 +1053,94 @@
       }
     }
 
-    // Cart Management
     function addToCart(id) {
       const dish = menuData.find(d => d.id === id);
       if (dish) {
-        cart.push(dish);
-        document.getElementById("cart-count").innerText = cart.length;
+        const existing = cart.find(item => item.id === id);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ ...dish, qty: 1 });
+        }
+        updateCartCount();
+        renderCart();
+        toggleCartDrawer();
       }
     }
 
-    // Dashboard Tabs
+    function updateQuantity(id, change) {
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += change;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+        updateCartCount();
+        renderCart();
+      }
+    }
+
+    function updateCartCount() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("cart-count").innerText = totalCount;
+    }
+
+    function renderCart() {
+      const container = document.getElementById("cart-items-container");
+      if (cart.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your cart is empty.</p>`;
+        document.getElementById("cart-total-price").innerText = "PKR 0";
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="cart-item-row">
+          <div>
+            <div style="font-weight: 600; font-size: 0.95rem;">${item.name}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">PKR ${item.price} x ${item.qty}</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      document.getElementById("cart-total-price").innerText = `PKR ${totalPrice.toLocaleString()}`;
+    }
+
+    function proceedToCheckout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+      toggleCartDrawer();
+      switchView("checkout");
+    }
+
+    function handleCheckoutSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("chk-name").value;
+      const itemsSummary = cart.map(i => `${i.name} (${i.qty})`).join(', ');
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      
+      mockOrders.unshift({
+        id: `ORD-${Date.now().toString().slice(-3)}`,
+        customer: name,
+        items: itemsSummary,
+        total: `PKR ${totalPrice.toLocaleString()}`,
+        status: "Preparing"
+      });
+
+      cart = [];
+      updateCartCount();
+      renderDashboard();
+      alert("Order placed successfully!");
+      switchView("home");
+    }
+
     function switchDashTab(tabName, btn) {
       document.querySelectorAll(".dash-tab-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
@@ -836,7 +1148,6 @@
       document.getElementById(`dash-tab-${tabName}`).style.display = "block";
     }
 
-    // Render Dashboard Data
     function renderDashboard() {
       const ordersBody = document.getElementById("dash-orders-body");
       ordersBody.innerHTML = mockOrders.map(o => `
@@ -856,6 +1167,7 @@
       `).join('');
 
       const resBody = document.getElementById("dash-res-body");
+      resBody.items = mockReservations;
       resBody.innerHTML = mockReservations.map(r => `
         <tr>
           <td>${r.id}</td>
@@ -891,7 +1203,6 @@
       }
     }
 
-    // Cookie Consent
     function checkCookieConsent() {
       if (!localStorage.getItem("cookie_consent")) {
         document.getElementById("cookie-banner").style.display = "flex";
